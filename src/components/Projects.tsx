@@ -39,7 +39,17 @@ const Projects = () => {
       githubUrl: 'https://github.com/PADAMATIASHOK/StockManagementSystem',
       image: '/Screenshot 2025-06-29 110919.png',
       featured: false
+    },
+    {
+      title: 'CoreBanking System',
+      description: 'A Core Banking System built with Java, Spring Boot, and MySQL that provides secure and efficient handling of customer accounts, transactions, balance checks, and fund transfers with RESTful APIs and role-based access control..',
+      technologies: ['Java','JSP','Maven','Spring','Reactjs','MySQL'],
+      liveUrl: null,
+      githubUrl: 'https://github.com/PADAMATIASHOK/CoreBanking-System/tree/master',
+      image: '/Screenshot 2025-06-29 162537.png',
+      featured: false
     }
+    
   ];
 
   return (
