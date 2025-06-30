@@ -12,19 +12,19 @@ const Skills = () => {
     {
       title: 'Web Technologies',
       icon: <Globe className="h-6 w-6" />,
-      skills: ['HTML5', 'CSS3', 'JavaScript ES6+', 'Responsive Design'],
+      skills: ['HTML5', 'CSS3', 'JavaScript ES6+', 'Boostrap','React JS'],
       color: 'bg-green-500'
     },
     {
       title: 'Development Tools',
       icon: <Wrench className="h-6 w-6" />,
-      skills: ['Git', 'GitHub', 'VS Code', 'Command Line'],
+      skills: ['Spring Boot','Git', 'GitHub', 'JSP Servlets'],
       color: 'bg-purple-500'
     },
     {
       title: 'Core Concepts',
       icon: <Database className="h-6 w-6" />,
-      skills: ['Object-Oriented Programming', 'Data Structures', 'Algorithms', 'Problem Solving'],
+      skills: ['Object-Oriented Programming', 'Data Structures', 'Hibernate', 'Problem Solving'],
       color: 'bg-orange-500'
     }
   ];

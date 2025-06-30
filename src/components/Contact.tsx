@@ -9,9 +9,13 @@ const Contact = () => {
     subject: '',
     message: ''
   });
+  const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const SERVICE_ID = 'service_0n0bi4d';
-  const TEMPLATE_ID = 'template_pnkh3ue'; // Set to your actual template ID
+  const TEMPLATE_ID_USER = 'template_pnkh3ue'; // auto-reply to user
+  const TEMPLATE_ID_ADMIN = 'template_e3szr3k'; // notification to admin
   const USER_ID = 'pnlg72qnNAcktEU4f'; // Public key from EmailJS
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -23,18 +27,27 @@ const Contact = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
+    setSuccessMessage('');
+    setErrorMessage('');
+    // Send to the email entered by the user only
+    const userData = {
+      ...formData,
+      to_email: formData.email,
+    };
     emailjs.send(
       SERVICE_ID,
-      TEMPLATE_ID,
-      formData,
+      TEMPLATE_ID_USER,
+      userData,
       USER_ID
-    )
-    .then(() => {
-      alert('Email successfully sent!');
+    ).then(() => {
+      setSuccessMessage('Your message has been sent! Please check your email.');
       setFormData({ name: '', email: '', subject: '', message: '' });
+      setLoading(false);
     }, (error) => {
-      alert('There was an error sending the email.');
+      setErrorMessage('There was an error sending your message. Please try again later.');
       console.error('There was an error sending the email:', error.text);
+      setLoading(false);
     });
   };
 
@@ -50,7 +63,6 @@ const Contact = () => {
             or just having a chat about technology. Feel free to reach out!
           </p>
         </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Information */}
           <div className="space-y-8">
@@ -138,7 +150,17 @@ const Contact = () => {
             <h3 className="text-2xl font-semibold text-gray-900 mb-6">
               Send Me a Message
             </h3>
-            
+            {/* Success/Error Messages */}
+            {successMessage && (
+              <div className="mb-4 p-4 rounded-lg bg-green-100 text-green-800 border border-green-200">
+                {successMessage}
+              </div>
+            )}
+            {errorMessage && (
+              <div className="mb-4 p-4 rounded-lg bg-red-100 text-red-800 border border-red-200">
+                {errorMessage}
+              </div>
+            )}
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
@@ -207,10 +229,23 @@ const Contact = () => {
               
               <button
                 type="submit"
-                className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium flex items-center justify-center gap-2"
+                className={`w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium flex items-center justify-center gap-2 ${loading ? 'opacity-60 cursor-not-allowed' : ''}`}
+                disabled={loading}
               >
-                <Send className="h-5 w-5" />
-                Send Message
+                {loading ? (
+                  <>
+                    <svg className="animate-spin h-5 w-5 mr-2 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                    </svg>
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    <Send className="h-5 w-5" />
+                    Send Message
+                  </>
+                )}
               </button>
             </form>
           </div>
