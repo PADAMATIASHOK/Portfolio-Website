@@ -24,7 +24,7 @@ const Skills = () => {
     {
       title: 'Core Concepts',
       icon: <Database className="h-6 w-6" />,
-      skills: ['Object-Oriented Programming', 'Data Structures', 'Hibernate', 'Problem Solving'],
+      skills: ['Object-Oriented Programming', 'SQL','Oracle' ,'Data Structures', 'Hibernate', 'Problem Solving'],
       color: 'bg-orange-500'
     }
   ];
